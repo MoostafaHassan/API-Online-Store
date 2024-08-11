@@ -1,2 +1,2 @@
 # API-Online-Store
-API testing project for a fake store API (using Postman tool)
+API testing collection for a fake online store (using Postman tool)
