@@ -1,0 +1,739 @@
+{
+	"info": {
+		"_postman_id": "89ed921a-d99a-4add-b0a5-ff18425bdc74",
+		"name": "Online Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34719756"
+	},
+	"item": [
+		{
+			"name": "Retrieve All Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify The First Product\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].id).to.eql(1);\r",
+							"    pm.expect(jsonData[0].title).to.eql(\"Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops\");\r",
+							"      pm.expect(jsonData[0].price).to.eql(109.95);\r",
+							"       pm.expect(jsonData[0].description).to.eql(\"Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday\");\r",
+							"        pm.expect(jsonData[0].category).to.eql(\"men's clothing\");\r",
+							"        pm.expect(jsonData[0].image).to.eql(\"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg\");\r",
+							"         pm.expect(jsonData[0].rating.rate).to.eql(3.9);\r",
+							"         pm.expect(jsonData[0].rating.count).to.eql(120);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify The Last Product\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[19].id).to.eql(20);\r",
+							"    pm.expect(jsonData[19].title).to.eql(\"DANVOUY Womens T Shirt Casual Cotton Short\");\r",
+							"      pm.expect(jsonData[19].price).to.eql(12.99);\r",
+							"       pm.expect(jsonData[19].description).to.eql(\"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.\");\r",
+							"        pm.expect(jsonData[19].category).to.eql(\"women's clothing\");\r",
+							"        pm.expect(jsonData[19].image).to.eql(\"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg\");\r",
+							"         pm.expect(jsonData[19].rating.rate).to.eql( 3.6);\r",
+							"         pm.expect(jsonData[19].rating.count).to.eql(145);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"// Parse The JSON Response\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Initialize A Counter\r",
+							"var idCount = 0;\r",
+							"\r",
+							"// Iterate Theough The Response\r",
+							"jsonData.forEach(function(item){\r",
+							"if(item.hasOwnProperty('id')){\r",
+							"    idCount ++;\r",
+							"}\r",
+							"});\r",
+							"// Expected Count\r",
+							"var expectedCount = 20;\r",
+							"\r",
+							"// verify that the Expected Count Matches the Actual Count\r",
+							"pm.test(\"Verify 'id' Count\", function () {\r",
+							"\r",
+							"    pm.expect(idCount).to.eql(expectedCount);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve A Single Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify Product ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.variables.get(\"Product_ID\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products/{{Product_ID}}",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products",
+						"{{Product_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Product Categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify Product Categories\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"electronics\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"jewelery\");\r",
+							"     pm.expect(pm.response.text()).to.include(\"men's clothing\");\r",
+							"     pm.expect(pm.response.text()).to.include(\"women's clothing\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products/categories",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve A Specific Category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Initilize A Counter\r",
+							"var categoryCount = 0;\r",
+							"//Iterate Through The Response\r",
+							"jsonData.forEach(function(item){\r",
+							"    if(item.hasOwnProperty('id')){\r",
+							"        categoryCount++;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Expected Count\r",
+							"var expectedCount = 4;\r",
+							"\r",
+							"// verify that the Expected Count Matches the Actual Count\r",
+							"pm.test(\"Verify 'Categories' count \", function () {\r",
+							"   pm.expect(categoryCount).to.eql(expectedCount);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Product ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].Product_ID).to.eql(parseInt(pm.variables.get(\"Product_ID\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products/category/jewelery",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products",
+						"category",
+						"jewelery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve All Carts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse JSON Response\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//Initialize A Counter for Carts\r",
+							"var cartCount = 0;\r",
+							"\r",
+							"// Iterate Through The Response\r",
+							"jsonData.forEach(function(item){\r",
+							"    if(item.hasOwnProperty('id')){\r",
+							"        cartCount++;\r",
+							"    }\r",
+							"\r",
+							"});\r",
+							"\r",
+							"// Expected Count\r",
+							"var expectedCount = 7;\r",
+							"\r",
+							"// Verify That The Expected Count Matches The Actual Count\r",
+							"pm.test(\"Verify 'id' Count\", function () {\r",
+							"  pm.expect(cartCount).to.eql(expectedCount);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/carts",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve A Single Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify Cart ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.variables.get(\"Cart_ID\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/carts/{{Cart_ID}}",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"carts",
+						"{{Cart_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve A Specific User's Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify carts for specific user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].id).to.eql(parseInt(pm.variables.get(\"cart_User_ID\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/carts/user/{{cart_User_ID}}",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"carts",
+						"user",
+						"{{cart_User_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve All Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// parse The JSON Response\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Inialize A Counter\r",
+							"var userCount = 0;\r",
+							"\r",
+							"// Iterate Through The Response\r",
+							"jsonData.forEach(function(item){\r",
+							"if(item.hasOwnProperty('id')){\r",
+							"    userCount++;\r",
+							"}\r",
+							"});\r",
+							"\r",
+							"// Expected Count\r",
+							"var expectedUserCount = 10;\r",
+							"\r",
+							"// Verify That The Expected Count Matches The Actual Count\r",
+							"pm.test(\"Verify The User Count\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(userCount).to.eql(expectedUserCount);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/users",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve A Single User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify User Id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.variables.get(\"User_ID\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/users/{{User_ID}}",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"users",
+						"{{User_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product limit Results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify The First Product\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].id).to.eql(1);\r",
+							"     pm.expect(jsonData[0].title).to.eql(\"Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops\");\r",
+							"      pm.expect(jsonData[0].description).to.eql( \"Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday\");\r",
+							"      pm.expect(jsonData[0].rating.rate).to.eql(3.9);\r",
+							"      pm.expect(jsonData[0].rating.count).to.eql(120);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify The Fifth Product\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[4].id).to.eql(5);\r",
+							"     pm.expect(jsonData[4].title).to.eql(\"John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet\");\r",
+							"      pm.expect(jsonData[4].description).to.eql( \"From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.\");\r",
+							"      pm.expect(jsonData[4].rating.rate).to.eql(4.6);\r",
+							"      pm.expect(jsonData[4].rating.count).to.eql(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products?limit=5",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"title\": \"Test Product\",\r\n     \"price\": 13.5,\r\n     \"description\": \"lorem ipsum set\",\r\n     \"image\": \"https://i.pravatar.cc\",\r\n     \"category\": \"electronic\"\r\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product_PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"title\": \"Test Product\",\r\n     \"price\": 13.5,\r\n     \"description\": \"lorem ipsum set\",\r\n     \"image\": \"https://i.pravatar.cc\",\r\n     \"category\": \"electronic\"\r\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products/7",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product_PATCH",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"title\": \"Test Product\",\r\n     \"price\": 13.5,\r\n     \"description\": \"lorem ipsum set\",\r\n     \"image\": \"https://i.pravatar.cc\"//,\r\n     //\"category\": \"electronic\"\r\n     \r\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products/7",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/products/6",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"products",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login To Get Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"mor_2314\",\r\n    \"password\": \"83r5^_\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/auth/login",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"userId\":5,\r\n    \"date\":\"2020-02-03\",\r\n    \"products\":[{\"productId\":5,\"quantity\":1},{\"productId\":1,\"quantity\":5}]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/carts",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Cart _PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"userId\":3,\r\n    \"date\":\"2019-12-10\",\r\n    \"products\":[{\"productId\":1,\"quantity\":3}]\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/carts/7",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"carts",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Cart _PATCH",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"userId\":3,\r\n    \"date\":\"2019-12-10\"//,\r\n    //\"products\":[{\"productId\":1,\"quantity\":3}]\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/carts/7",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"carts",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Cart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{Shopping_Base_URL}}/carts/6",
+					"host": [
+						"{{Shopping_Base_URL}}"
+					],
+					"path": [
+						"carts",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Response time is less than 500ms\", function () {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+					"});\r",
+					"pm.test(\"Status Code Is Ok\", function () {\r",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Shopping_Base_URL",
+			"value": "https://fakestoreapi.com",
+			"type": "string"
+		},
+		{
+			"key": "Product_ID",
+			"value": "1"
+		},
+		{
+			"key": "Cart_ID",
+			"value": "2"
+		},
+		{
+			"key": "cart_User_ID",
+			"value": "1"
+		},
+		{
+			"key": "User_ID",
+			"value": "5"
+		}
+	]
+}
